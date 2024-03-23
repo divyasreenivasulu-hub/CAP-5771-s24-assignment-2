@@ -4,7 +4,7 @@ import warnings
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import cluster, datasets, mixture
-from sklearn.datasets import make_blobs
+from sklearn.datasets import make_blobs,make_circles,make_moons
 from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import StandardScaler
 from itertools import cycle, islice
