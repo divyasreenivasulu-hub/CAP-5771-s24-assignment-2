@@ -39,10 +39,24 @@ def compute():
     """
     A.	Load the following 5 datasets with 100 samples each: noisy_circles (nc), noisy_moons (nm), blobs with varied variances (bvv), Anisotropicly distributed data (add), blobs (b). Use the parameters from (https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html), with any random state. (with random_state = 42). Not setting the correct random_state will prevent me from checking your results.
     """
+    no_samples = 100
+    random_state = 42
+    nc = make_circles(n_samples=no_samples, factor=.5, noise=.05, random_state=random_state)
+    nm = make_moons(n_samples=no_samples, noise=.05, random_state=random_state)
+    b = make_blobs(n_samples=no_samples, random_state=random_state)
+    bvv= make_blobs(n_samples=no_samples, cluster_std=[1.0, 2.5, 0.5], random_state=random_state)
+    X, y = make_blobs(n_samples=no_samples, random_state=random_state)
+    transf = [[0.6, -0.6], [-0.4, 0.8]]
+    X_aniso = np.dot(X, transf)
+    add = (X_aniso, y)
 
     # Dictionary of 5 datasets. e.g., dct["nc"] = [data, labels]
     # 'nc', 'nm', 'bvv', 'add', 'b'. keys: 'nc', 'nm', 'bvv', 'add', 'b' (abbreviated datasets)
-    dct = answers["1A: datasets"] = {}
+    dct = answers["1A: datasets"] = {'nc': nc,
+                                     'nm': nm,
+                                     'bvv': bvv,
+                                     'add': add,
+                                     'b': b}
 
     """
    B. Write a function called fit_kmeans that takes dataset (before any processing on it), i.e., pair of (data, label) Numpy arrays, and the number of clusters as arguments, and returns the predicted labels from k-means clustering. Use the init='random' argument and make sure to standardize the data (see StandardScaler transform), prior to fitting the KMeans estimator. This is the function you will use in the following questions. 
