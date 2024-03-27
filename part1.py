@@ -29,8 +29,18 @@ In the first task, you will explore how k-Means perform on datasets with diverse
 # Change the arguments and return according to 
 # the question asked. 
 
-def fit_kmeans():
-    return None
+def fit_kmeans(data, label, n_clusters):
+    # Standardize the data
+    scaler = StandardScaler()
+    data = scaler.fit_transform(data)
+
+    # Fit the KMeans model
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+    kmeans.fit(data)
+    
+    # Return the predicted labels
+   
+    return kmeans.labels_
 
 
 def compute():
