@@ -50,13 +50,11 @@ def compute():
     """
     A.	Load the following 5 datasets with 100 samples each: noisy_circles (nc), noisy_moons (nm), blobs with varied variances (bvv), Anisotropicly distributed data (add), blobs (b). Use the parameters from (https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html), with any random state. (with random_state = 42). Not setting the correct random_state will prevent me from checking your results.
     """
-    no_samples = 100
-    random_state = 42
-    nc = make_circles(n_samples=no_samples, factor=.5, noise=.05, random_state=random_state)
-    nm = make_moons(n_samples=no_samples, noise=.05, random_state=random_state)
-    b = make_blobs(n_samples=no_samples, random_state=random_state)
-    bvv= make_blobs(n_samples=no_samples, cluster_std=[1.0, 2.5, 0.5], random_state=random_state)
-    X, y = make_blobs(n_samples=no_samples, random_state=random_state)
+    nc = make_circles(n_samples=100, factor=.5, noise=.05, random_state=42)
+    nm = make_moons(n_samples=100, noise=.05, random_state=42)
+    b = make_blobs(n_samples=100, random_state=42)
+    bvv= make_blobs(n_samples=100, cluster_std=[1.0, 2.5, 0.5], random_state=42)
+    X, y = make_blobs(n_samples=100, random_state=42)
     transf = [[0.6, -0.6], [-0.4, 0.8]]
     X_aniso = np.dot(X, transf)
     add = (X_aniso, y)
@@ -74,7 +72,7 @@ def compute():
     """
 
     # dct value:  the `fit_kmeans` function
-    #dct = answers["1B: fit_kmeans"] = fit_kmeans
+    dct = answers["1B: fit_kmeans"] = fit_kmeans
 
 
     """
@@ -82,34 +80,25 @@ def compute():
     
     Create a pdf of the plots and return in your report. 
     """
-    
-# Setting the different number of clusters to use
-    n_clusters_options = [2, 3, 5, 10]
+    kmeans_dct = {}
+    k_values = [2, 3, 5, 10]
 
-# Create a big figure with matplotlib
-    plt.figure(figsize=(15, 10))
+    for dataset_key, (X, y) in answers['1A: datasets'].items():
+        labels_dict = {}
+        for k in k_values:
+            labels = fit_kmeans(X, k)
+            labels_dict[k] = labels
+        kmeans_dct[dataset_key] = ((X, y), labels_dict)  
 
-# Generating all scatter plots for different datasets with different k values
-    for i, n_clusters in enumerate(n_clusters_options, start=1):
-        for j, (dataset_key, dataset_value) in enumerate(answers["1A: datasets"].items(), start=1):
-            # Use the fit_kmeans function here
-            predicted_labels = fit_kmeans(dataset_value[0], n_clusters)
-            plt.subplot(len(n_clusters_options), len(answers["1A: datasets"]), (i - 1) * len(answers["1A: datasets"]) + j)
-            plt.scatter(dataset_value[0][:, 0], dataset_value[0][:, 1], c=predicted_labels, s=50, cmap='viridis')
-            plt.xticks(())
-            plt.yticks(())
-            if i == 1:
-                plt.title(f"Dataset {dataset_key.upper()}")
-            if j == 1:
-                plt.ylabel(f"k={n_clusters}")
+    # Now call myplt.plot_part1C to plot the results
+    myplt.plot_part1C(kmeans_dct, 'kmeans_clusters.pdf')
 
-    plt.tight_layout()
-    plt.show()
+
 
     # dct value: return a dictionary of one or more abbreviated dataset names (zero or more elements) 
     # and associated k-values with correct clusters.  key abbreviations: 'nc', 'nm', 'bvv', 'add', 'b'. 
     # The values are the list of k for which there is success. Only return datasets where the list of cluster size k is non-empty.
-    dct = answers["1C: cluster successes"] = {"xy": [3,4], "zx": [2]} 
+    dct = answers["1C: cluster successes"] = {"nc": [10], "nm": [3,5,10], "bvv": [], "add": [],"b":[]} 
 
     # dct value: return a list of 0 or more dataset abbreviations (list has zero or more elements, 
     # which are abbreviated dataset names as strings)

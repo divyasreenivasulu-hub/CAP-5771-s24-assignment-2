@@ -37,26 +37,37 @@ def compute():
     """
     A.	Load the provided dataset “hierachal_toy_data.mat” using the scipy.io.loadmat function.
     """
+    mat_data = io.loadmat('/workspaces/CAP-5771-s24-assignment-2/hierarchical_toy_data.mat')
+    
+
+    # Assuming the data variable in mat is named 'X'
+    X = mat_data['X']  # Feature data
+    #y = mat_data['y'] 
+    print(mat_data.keys())
 
     # return value of scipy.io.loadmat()
-    answers["3A: toy data"] = {}
+    answers["3A: toy data"] = [X]
 
     """
     B.	Create a linkage matrix Z, and plot a dendrogram using the scipy.hierarchy.linkage and scipy.hierachy.dendrogram functions, with “single” linkage.
     """
+    Z = linkage(X, method='single')
 
     # Answer: NDArray
-    answers["3B: linkage"] = np.zeros(1)
+    answers["3B: linkage"] = Z
+    print(answers["3B: linkage"])
 
     # Answer: the return value of the dendogram function, dicitonary
-    answers["3B: dendogram"] = {}
+    dendro_dict = dendrogram(Z)
+    answers["3B: dendogram"] = dendro_dict
+    print(answers["3B: dendogram"])
 
     """
     C.	Consider the merger of the cluster corresponding to points with index sets {I={8,2,13}} J={1,9}}. At what iteration (starting from 0) were these clusters merged? That is, what row does the merger of A correspond to in the linkage matrix Z? The rows count from 0. 
     """
 
     # Answer type: integer
-    answers["3C: iteration"] = -1
+    answers["3C: iteration"] = -1(3,4,5)
 
     """
     D.	Write a function that takes the data and the two index sets {I,J} above, and returns the dissimilarity given by single link clustering using the Euclidian distance metric. The function should output the same value as the 3rd column of the row found in problem 2.C.
