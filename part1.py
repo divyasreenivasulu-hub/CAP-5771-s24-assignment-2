@@ -4,6 +4,7 @@ import warnings
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import cluster, datasets, mixture
+from sklearn.cluster import KMeans
 from sklearn.datasets import make_blobs,make_circles,make_moons
 from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import StandardScaler
@@ -29,7 +30,7 @@ In the first task, you will explore how k-Means perform on datasets with diverse
 # Change the arguments and return according to 
 # the question asked. 
 
-def fit_kmeans(data, label, n_clusters):
+def fit_kmeans(data, n_clusters):
     # Standardize the data
     scaler = StandardScaler()
     data = scaler.fit_transform(data)
@@ -67,13 +68,13 @@ def compute():
                                      'bvv': bvv,
                                      'add': add,
                                      'b': b}
-
+    #print (dct)
     """
    B. Write a function called fit_kmeans that takes dataset (before any processing on it), i.e., pair of (data, label) Numpy arrays, and the number of clusters as arguments, and returns the predicted labels from k-means clustering. Use the init='random' argument and make sure to standardize the data (see StandardScaler transform), prior to fitting the KMeans estimator. This is the function you will use in the following questions. 
     """
 
     # dct value:  the `fit_kmeans` function
-    dct = answers["1B: fit_kmeans"] = fit_kmeans
+    #dct = answers["1B: fit_kmeans"] = fit_kmeans
 
 
     """
@@ -81,6 +82,29 @@ def compute():
     
     Create a pdf of the plots and return in your report. 
     """
+    
+# Setting the different number of clusters to use
+    n_clusters_options = [2, 3, 5, 10]
+
+# Create a big figure with matplotlib
+    plt.figure(figsize=(15, 10))
+
+# Generating all scatter plots for different datasets with different k values
+    for i, n_clusters in enumerate(n_clusters_options, start=1):
+        for j, (dataset_key, dataset_value) in enumerate(answers["1A: datasets"].items(), start=1):
+            # Use the fit_kmeans function here
+            predicted_labels = fit_kmeans(dataset_value[0], n_clusters)
+            plt.subplot(len(n_clusters_options), len(answers["1A: datasets"]), (i - 1) * len(answers["1A: datasets"]) + j)
+            plt.scatter(dataset_value[0][:, 0], dataset_value[0][:, 1], c=predicted_labels, s=50, cmap='viridis')
+            plt.xticks(())
+            plt.yticks(())
+            if i == 1:
+                plt.title(f"Dataset {dataset_key.upper()}")
+            if j == 1:
+                plt.ylabel(f"k={n_clusters}")
+
+    plt.tight_layout()
+    plt.show()
 
     # dct value: return a dictionary of one or more abbreviated dataset names (zero or more elements) 
     # and associated k-values with correct clusters.  key abbreviations: 'nc', 'nm', 'bvv', 'add', 'b'. 
