@@ -103,7 +103,7 @@ def compute():
         inertia_values.append((k, inertia))
     # dct value has the same structure as in 2C
     dct = answers["2D: inertia plot"] = inertia_values
-
+    print(dct)
     # dct value should be a string, e.g., "yes" or "no"
     optimal_k_sse = sse_values.index(min(sse_values, key=lambda t: t[1])) + 1
     optimal_k_inertia = inertia_values.index(min(inertia_values, key=lambda t: t[1])) + 1
