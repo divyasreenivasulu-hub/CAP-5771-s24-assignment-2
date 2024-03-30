@@ -61,11 +61,11 @@ def compute():
 
     # Dictionary of 5 datasets. e.g., dct["nc"] = [data, labels]
     # 'nc', 'nm', 'bvv', 'add', 'b'. keys: 'nc', 'nm', 'bvv', 'add', 'b' (abbreviated datasets)
-    dct = answers["1A: datasets"] = {'nc': nc,
-                                     'nm': nm,
-                                     'bvv': bvv,
-                                     'add': add,
-                                     'b': b}
+    dct = answers["1A: datasets"] = {'nc': nc[0],nc[1]
+                                     'nm': nm[0],nm[1]
+                                     'bvv': bvv[0],bvv[1],
+                                     'add': add[0],add[1],
+                                     'b': b[0],b[1]}
     #print (dct)
     """
    B. Write a function called fit_kmeans that takes dataset (before any processing on it), i.e., pair of (data, label) Numpy arrays, and the number of clusters as arguments, and returns the predicted labels from k-means clustering. Use the init='random' argument and make sure to standardize the data (see StandardScaler transform), prior to fitting the KMeans estimator. This is the function you will use in the following questions. 
@@ -73,6 +73,7 @@ def compute():
 
     # dct value:  the `fit_kmeans` function
     dct = answers["1B: fit_kmeans"] = fit_kmeans
+    results = dct
 
 
     """
@@ -91,18 +92,18 @@ def compute():
         kmeans_dct[dataset_key] = ((X, y), labels_dict)  
 
     # Now call myplt.plot_part1C to plot the results
-    myplt.plot_part1C(kmeans_dct, 'report.pdf')
+    myplt.plot_part1C(kmeans_dct, 'part1_c.jpg')
 
 
 
     # dct value: return a dictionary of one or more abbreviated dataset names (zero or more elements) 
     # and associated k-values with correct clusters.  key abbreviations: 'nc', 'nm', 'bvv', 'add', 'b'. 
     # The values are the list of k for which there is success. Only return datasets where the list of cluster size k is non-empty.
-    dct = answers["1C: cluster successes"] = {"nc": [2,3,5], "nm": [2], "bvv": [3,5], "add": [3,5,10],"b":[3,5,10]} 
+    dct = answers["1C: cluster successes"] = {"bvv": [3], "add": [3],"b":[3]} 
 
     # dct value: return a list of 0 or more dataset abbreviations (list has zero or more elements, 
     # which are abbreviated dataset names as strings)
-    dct = answers["1C: cluster failures"] = ["nc": [10], "nm": [3,5,10], "bvv": [2,10], "add": [2],"b":[2]]
+    dct = answers["1C: cluster failures"] = ["nc","nm"]
 
     """
     D. Repeat 1.C a few times and comment on which (if any) datasets seem to be sensitive to the choice of initialization for the k=2,3 cases. You do not need to add the additional plots to your report.
@@ -113,7 +114,7 @@ def compute():
     # dct value: list of dataset abbreviations
     # Look at your plots, and return your answers.
     # The plot is part of your report, a pdf file name "report.pdf", in your repository.
-    dct = answers["1D: datasets sensitive to initialization"] = [""]
+    dct = answers["1D: datasets sensitive to initialization"] = ["nc","nm"]
 
     return answers
 
