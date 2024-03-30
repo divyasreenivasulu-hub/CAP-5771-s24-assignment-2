@@ -50,11 +50,14 @@ def compute():
     """
     A.	Load the following 5 datasets with 100 samples each: noisy_circles (nc), noisy_moons (nm), blobs with varied variances (bvv), Anisotropicly distributed data (add), blobs (b). Use the parameters from (https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html), with any random state. (with random_state = 42). Not setting the correct random_state will prevent me from checking your results.
     """
-    nc = make_circles(n_samples=100, factor=.5, noise=.05, random_state=42)
-    nm = make_moons(n_samples=100, noise=.05, random_state=42)
-    b = make_blobs(n_samples=100, random_state=42)
-    bvv= make_blobs(n_samples=100, cluster_std=[1.0, 2.5, 0.5], random_state=42)
-    X, y = make_blobs(n_samples=100, random_state=42)
+    #dct=answers['1A': datasets"]={}
+    #n_samples=100
+    #r_state=42
+    nc = datasets.make_circles(n_samples=100, factor=.5, noise=.05, random_state=42)
+    nm = datasets.make_moons(n_samples=100, noise=.05, random_state=42)
+    b = datasets.make_blobs(n_samples=100, random_state=42)
+    bvv= datasets.make_blobs(n_samples=100, cluster_std=[1.0, 2.5, 0.5], random_state=42)
+    X, y = datasets.make_blobs(n_samples=100, random_state=42)
     transf = [[0.6, -0.6], [-0.4, 0.8]]
     X_aniso = np.dot(X, transf)
     add = (X_aniso, y)
