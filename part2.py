@@ -66,13 +66,13 @@ def compute():
 
     # dct: return value from the make_blobs function in sklearn, expressed as a list of three numpy arrays
     dct = answers["2A: blob"] = [blob_data,blob_labels]
-    print(dct)
+    #print(dct)
     """
     B. Modify the fit_kmeans function to return the SSE (see Equations 8.1 and 8.2 in the book).
     """
     # dct value: the `fit_kmeans` function
     dct = answers["2B: fit_kmeans"] = fit_kmeans
-    print(dct)
+    #print(dct)
     """
     C.	Plot the SSE as a function of k for k=1,2,….,8, and choose the optimal k based on the elbow method.
     """
@@ -81,19 +81,10 @@ def compute():
         sse, _ = fit_kmeans(blob_data, k)
         sse_values.append((k, sse))
     
-    # Plotting the SSE values
-    k_vals, sse_vals = zip(*sse_values)
-    plt.figure(figsize=(8, 6))
-    plt.plot(k_vals, sse_vals, 'bo-')
-    plt.title('SSE vs. Number of Clusters')
-    plt.xlabel('Number of clusters (k)')
-    plt.ylabel('Sum of Squared Errors (SSE)')
-    plt.show()
-
     # dct value: a list of tuples, e.g., [[0, 100.], [1, 200.]]
     # Each tuple is a (k, SSE) pair
     dct = answers["2C: SSE plot"] = sse_values
-    print(dct)
+    #print(dct)
     """
     D.	Repeat part 2.C for inertia (note this is an attribute in the kmeans estimator called _inertia). Do the optimal k’s agree?
     """
@@ -103,11 +94,9 @@ def compute():
         inertia_values.append((k, inertia))
     # dct value has the same structure as in 2C
     dct = answers["2D: inertia plot"] = inertia_values
-    print(dct)
+    #print(dct)
     # dct value should be a string, e.g., "yes" or "no"
-    optimal_k_sse = sse_values.index(min(sse_values, key=lambda t: t[1])) + 1
-    optimal_k_inertia = inertia_values.index(min(inertia_values, key=lambda t: t[1])) + 1
-    dct = answers["2D: do ks agree?"] = "yes"
+    dct = answers["2D: do ks agree?"] = "no"
 
     return answers
 
