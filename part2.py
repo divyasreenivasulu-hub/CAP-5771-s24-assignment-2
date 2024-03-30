@@ -41,7 +41,8 @@ def fit_kmeans(data, n_clusters):
     kmeans = KMeans(n_clusters=n_clusters, random_state=42)
     kmeans.fit(data)
     # SSE is the sum of squared distances of samples to their closest cluster center
-    sse = np.sum((data - kmeans.cluster_centers_[kmeans.labels_])**2)
+    distances = np.sqrt(np.sum((data - kmeans.cluster_centers_[kmeans.labels_])**2,axis=1))
+    sse=np.sum(distances**2)
     return sse, kmeans.inertia_
 
 
@@ -93,10 +94,10 @@ def compute():
     """
     D.	Repeat part 2.C for inertia (note this is an attribute in the kmeans estimator called _inertia). Do the optimal k’s agree?
     """
-    inertia_values = []
-    for k in range(1, 9):
-        _, inertia = fit_kmeans(X, k)
-        inertia_values.append((k, inertia))
+    k_values = range(1, 9)
+
+# Calculate inertia for each k and store as a list of tuples
+    inertia_values = [(k, fit_kmeans(X, k)) for k in k_values]
     # dct value has the same structure as in 2C
     dct = answers["2D: inertia plot"] = inertia_values
     #print(dct)

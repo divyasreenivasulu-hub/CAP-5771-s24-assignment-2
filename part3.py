@@ -8,6 +8,7 @@ from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import StandardScaler
 from itertools import cycle, islice
 import scipy.io as io
+from scipy.spatial.distance import euclidean
 from scipy.cluster.hierarchy import dendrogram, linkage  #
 
 # import plotly.figure_factory as ff
@@ -89,13 +90,13 @@ def compute():
     """
     # Answer type: a function defined above
     
-    answers["3D: function"] = data_index_function(toy_data['x'],I=[8,2,13},j={1,9})
+    answers["3D: function"] = data_index_function(toy_data['X'],indices_I={8,2,13},indices_J={1,9})
     #print(data_index_function)
     """
     E.	In the actual algorithm, deciding which clusters to merge should consider all of the available clusters at each iteration. List all the clusters as index sets, using a list of lists, 
     e.g., [{0,1,2},{3,4},{5},{6},…],  that were available when the two clusters in part 2.D were merged.
     """
-    avail_clusters=[{i}for i in range(len(mat_data['X']))]
+    avail_clusters=[{i}for i in range(len(toy_data['X']))]
     avail_clusters.append(I.union(J))
     answers["3E:clusters"]=avail_clusters
 
