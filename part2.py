@@ -76,14 +76,19 @@ def compute():
     """
     C.	Plot the SSE as a function of k for k=1,2,….,8, and choose the optimal k based on the elbow method.
     """
-    sse_values = []
-    for k in range(1, 9):
+    k_values = range(1, 9)
+
+# Use your function to calculate SSE for each k
+    results = []
+    for k in k_values:
         sse, _ = fit_kmeans(X, k)
-        sse_values.append((k, sse))
+        results.append((k, sse))
+    dct_value = [[k, sse] for k, sse in results]
+
     
     # dct value: a list of tuples, e.g., [[0, 100.], [1, 200.]]
     # Each tuple is a (k, SSE) pair
-    dct = answers["2C: SSE plot"] = sse_values
+    dct = answers["2C: SSE plot"] = dct_value
     #print(dct)
     """
     D.	Repeat part 2.C for inertia (note this is an attribute in the kmeans estimator called _inertia). Do the optimal k’s agree?
