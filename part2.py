@@ -94,12 +94,13 @@ def compute():
     """
     D.	Repeat part 2.C for inertia (note this is an attribute in the kmeans estimator called _inertia). Do the optimal k’s agree?
     """
-    k_values = range(1, 9)
+    #k_values = range(1, 9)
 
 # Calculate inertia for each k and store as a list of tuples
-    inertia_values = [(k, fit_kmeans(X, k)) for k in k_values]
+    k_inertia_values = [(k, fit_kmeans(X, k)) for k in range(1, 9)]
+
     # dct value has the same structure as in 2C
-    dct = answers["2D: inertia plot"] = inertia_values
+    dct = answers["2D: inertia plot"] = k_inertia_values
     #print(dct)
     # dct value should be a string, e.g., "yes" or "no"
     dct = answers["2D: do ks agree?"] = "no"
