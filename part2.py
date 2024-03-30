@@ -54,18 +54,18 @@ def compute():
     """
     A.	Call the make_blobs function with following parameters :(center_box=(-20,20), n_samples=20, centers=5, random_state=12).
     """
+    n_samples=20
+    centers=5 
+    center_box=(-20, 20) 
+    random_state=12
+    X,label=datasets.make_blobs(n_samples=n_samples,centers=centers,center_box=center_box,random_state=random_state)
+    co_1=X[0:,0:1]
+    co_2=X[0:,1:]
 
-    blob_data, blob_labels = make_blobs(
-        n_samples=20, 
-        centers=5, 
-        cluster_std=1.0, 
-        center_box=(-20, 20), 
-        random_state=12
-)
 
 
     # dct: return value from the make_blobs function in sklearn, expressed as a list of three numpy arrays
-    dct = answers["2A: blob"] = [blob_data,blob_labels]
+    dct = answers["2A: blob"] = [co_1,co_2,label]
     #print(dct)
     """
     B. Modify the fit_kmeans function to return the SSE (see Equations 8.1 and 8.2 in the book).
@@ -78,7 +78,7 @@ def compute():
     """
     sse_values = []
     for k in range(1, 9):
-        sse, _ = fit_kmeans(blob_data, k)
+        sse, _ = fit_kmeans(X, k)
         sse_values.append((k, sse))
     
     # dct value: a list of tuples, e.g., [[0, 100.], [1, 200.]]
@@ -90,7 +90,7 @@ def compute():
     """
     inertia_values = []
     for k in range(1, 9):
-        _, inertia = fit_kmeans(blob_data, k)
+        _, inertia = fit_kmeans(X, k)
         inertia_values.append((k, inertia))
     # dct value has the same structure as in 2C
     dct = answers["2D: inertia plot"] = inertia_values
