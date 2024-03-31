@@ -82,7 +82,7 @@ def compute():
     #inertia_values = []
     for k in range(1, 9):
         sse, inertia = fit_kmeans(X, k)
-        sse_values.append((k, sse))
+        sse_values.append([k, sse])
         #inertia_values.append((k, inertia))
 
     
@@ -96,7 +96,7 @@ def compute():
     inertia_values = []
     for k in range(1, 9):
         _, inertia = fit_kmeans(X, k)  # Extract only the inertia value from the function's return
-        inertia_values.append((k, inertia))
+        inertia_values.append([k, inertia])
     # dct value has the same structure as in 2C
     dct = answers["2D: inertia plot"] =inertia_values
     #print(dct)
