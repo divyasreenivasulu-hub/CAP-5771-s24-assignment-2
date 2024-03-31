@@ -27,40 +27,41 @@ In this task, you will explore hierarchical clustering over different datasets. 
 # Change the arguments and return according to 
 # the question asked. 
 
-def fit_hierarchical_cluster(data, n_clusters, linkage_type):
-    scaler=StandardScaler()
-    data_standardized = scaler.fit_transform(data[0])
+def fit_hierarchical_cluster(data, linkage_type, n_clusters):
+    model = AgglomerativeClustering(linkage=linkage_type, n_clusters=n_clusters)
+    # Standardize the data
+    scaler = StandardScaler()
+    data_std = scaler.fit_transform(data)
 
-    # Fit the AgglomerativeClustering model
-    clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage_type)
-    clustering.fit(data_standardized,data[1])
-    labels=clustering.labels_
-    return labels
-    #return None
+    # Train AgglomerativeClustering model
+    #model = AgglomerativeClustering(linkage=linkage_type, n_clusters=n_clusters)
+    model.fit(data_std)
+
+    # Return the label predictions
+    return model.labels_
 
 def fit_modified(data, linkage_type):
+    # Standardize the data
     scaler = StandardScaler()
-    data_standardized = scaler.fit_transform(data[0])
+    data_std = scaler.fit_transform(data)
 
     # Calculate the linkage matrix
-    Z = linkage(data_standardized, linkage=linkage_type)
+    Z = linkage(data_std, method=linkage_type)
 
-    # Find the maximum rate of change in distances between successive merges
+    # Determine the cut-off distance to form two distinct clusters
+    # Using the maximum rate of change of the distance between successive cluster merges
     distances = Z[:, 2]
-    distance_diff = np.diff(distances)
-    max_diff_index = np.argmax(distance_diff)
+    max_distance_change = np.max(np.diff(distances))
+    cut_off_distance = distances[np.argmax(np.diff(distances))] + max_distance_change / 2
 
-    # Define the cut-off distance
-    cut_off_distance = distances[max_diff_index] + distance_diff[max_diff_index] / 2
+    # Apply flat clustering to form clusters at the specified cut-off distance
+    labels = fcluster(Z, cut_off_distance, criterion='distance')
+    
+    # Adjust labels to start from 0 and be continuous integers
+    labels = np.array(labels) - 1
 
-    # Number of clusters is the number of merges above the cut-off distance plus 1
-    n_clusters = len(distances[distances > cut_off_distance]) + 1
+    return labels
 
-    # Fit hierarchical clustering with calculated number of clusters
-    model = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage_type)
-    model.fit(data_standardized)
-
-    return model.labels_
 
 def compute():
     answers = {}
@@ -98,15 +99,7 @@ def compute():
 
     Create a pdf of the plots and return in your report. 
     """
-    #modified_dct = {}
-
-# Assume 'dct' contains your datasets as before
-    linkage_types = ['single', 'complete', 'ward', 'average']
-    for i, (linkage_type) in enumerate(linkage_types, 1):
-        for j, (dataset_name, (X, _)) in enumerate(answers["4A: datasets"].items(), 1):
-            labels = fit_hierarchical_cluster(X, n_clusters=2, linkage_type=linkage_types)
-    myplt.plot_part1C(labels,'part4b.jpg')
-
+      
     # dct value: list of dataset abbreviations (see 1.C)
     dct = answers["4B: cluster successes"] = [""]
 
