@@ -51,7 +51,9 @@ from scipy.cluster.hierarchy import linkage
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 
-def fit_modified(data, linkage_method, percentile=95):
+
+
+def fit_modified(data, linkage_method, elbow_threshold=0.05):
     # Standardize the data
     scaler = StandardScaler()
     data_scaled = scaler.fit_transform(data)
@@ -61,30 +63,28 @@ def fit_modified(data, linkage_method, percentile=95):
 
     # Calculate the distances between each merge
     distances = Z[:, 2]
-    
-    # Determine the percentile of the distances as the cutoff
-    cutoff_distance = np.percentile(distances, percentile)
+    # Calculate the rate of distance increase between successive merges
+    distance_diffs = np.diff(distances)
+    # Normalize by the max distance to avoid scale issues
+    normalized_distance_diffs = distance_diffs / distances.max()
 
-    # Initialize cluster labels to a unique number for each instance
-    labels = np.arange(data_scaled.shape[0])
-    
-    # Create a new cluster label for each merging step above the cutoff distance
-    next_cluster_label = data_scaled.shape[0]
-    for i, merge_info in enumerate(Z):
-        if merge_info[2] > cutoff_distance:
-            break
-        # If the distance is below the cutoff, merge the clusters
-        cluster_1 = int(merge_info[0])
-        cluster_2 = int(merge_info[1])
-        
-        # For each original point, if it was a member of either cluster being merged, update its label
-        labels[labels == cluster_1] = next_cluster_label
-        labels[labels == cluster_2] = next_cluster_label
-        
-        next_cluster_label += 1
+    # Find the "elbow" in the distances, which may be a good cutoff for clustering
+    elbow_index = np.where(normalized_distance_diffs > elbow_threshold)[0]
+    if len(elbow_index) > 0:
+        cutoff_distance = distances[elbow_index[0]]
+    else:
+        cutoff_distance = distances[-1]  # No elbow found, use the last merge distance
 
-    # Return labels array, where each element has the label of the cluster it belongs to
-    return labels
+    # Perform clustering with the determined cutoff distance
+    model = AgglomerativeClustering(
+        n_clusters=None, 
+        distance_threshold=cutoff_distance, 
+        linkage=linkage_method
+    )
+    model.fit(data_scaled)
+    return model.labels_
+
+
 
 
 
@@ -147,7 +147,7 @@ def compute():
 # Now, kmeans_dct is structured correctly to be used with plot_part1C for all linkage methods
 # Call plot_part1C once for all datasets and linkage methods
     #plot_file_name = '/mnt/data/part4_b_composite.jpg'  # Name of the file to save the plot
-    myplt.plot_part1C(kmeans_dct, 'plot_file_name.jpg')
+    myplt.plot_part1C(kmeans_dct, 'part4_b.jpg')
 
 
 
@@ -182,7 +182,7 @@ def compute():
 # Now, plot_dct is structured correctly to be used with plot_part1C for all linkage methods
 # Call plot_part1C once for all datasets and linkage methods
 #plot_file_name = '/mnt/data/modified_clustering_results.jpg'  # Update to your desired path
-    myplt.plot_part1C(plot_dct, "plot_file.jpg")
+    myplt.plot_part1C(plot_dct, "part4_c.jpg")
 
     
 

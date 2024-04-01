@@ -42,8 +42,7 @@ def fit_kmeans(data, n_clusters):
     # Return the predicted labels
    
     return kmeans.labels_
-with open('part1.pkl','rb') as f:
-    data=pickle.load(f)
+
 
 def compute():
     answers = {}
@@ -78,7 +77,7 @@ def compute():
     # dct value:  the `fit_kmeans` function
     dct = answers["1B: fit_kmeans"] = fit_kmeans
     results = dct
-
+    print (dct)
 
     """
     C.	Make a big figure (4 rows x 5 columns) of scatter plots (where points are colored by predicted label) with each column corresponding to the datasets generated in part 1.A, and each row being k=[2,3,5,10] different number of clusters. For which datasets does k-means seem to produce correct clusters for (assuming the right number of k is specified) and for which datasets does k-means fail for all values of k? 
@@ -114,6 +113,18 @@ def compute():
 
     Create a pdf of the plots and return in your report. 
     """
+    kmeans_dct = {}
+    k_values = [2, 3]
+
+    for dataset_key, (X, y) in answers['1A: datasets'].items():
+        labels_dict = {}
+        for k in k_values:
+            labels = fit_kmeans(X, k)
+            labels_dict[k] = labels
+        kmeans_dct[dataset_key] = ((X, y), labels_dict)  
+
+    # Now call myplt.plot_part1C to plot the results
+    myplt.plot_part1C(kmeans_dct, 'part1_d.jpg')
 
     # dct value: list of dataset abbreviations
     # Look at your plots, and return your answers.
