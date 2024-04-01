@@ -42,7 +42,8 @@ def fit_kmeans(data, n_clusters):
     # Return the predicted labels
    
     return kmeans.labels_
-
+with open('part1.pkl','rb') as f:
+    data=pickle.load(f)
 
 def compute():
     answers = {}

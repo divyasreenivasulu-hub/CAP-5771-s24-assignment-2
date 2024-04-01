@@ -79,17 +79,28 @@ def compute():
     """
     
     sse_values = []
-    #inertia_values = []
     for k in range(1, 9):
         sse, inertia = fit_kmeans(X, k)
         sse_values.append([k, sse])
-        #inertia_values.append((k, inertia))
 
     
     # dct value: a list of tuples, e.g., [[0, 100.], [1, 200.]]
     # Each tuple is a (k, SSE) pair
     dct = answers["2C: SSE plot"] = sse_values
-    #print(dct)
+    """
+    sse_values = answers["2C: SSE plot"]
+    k_values, sse_scores = zip(*sse_values)
+    fig=plt.figure(figsize=(20,10))
+    plt.plot(k_values, sse_scores, 'o-', linewidth=2, markersize=10)
+    plt.title('SSE vs. Number of Clusters')
+    plt.xlabel('Number of clusters (k)')
+    plt.ylabel('SSE (Sum of Squared Errors)')
+    plt.xticks(range(1, 9))  # Ensure x-ticks for each k value
+    plt.grid(False)
+
+    plt.savefig('part2)ques_c.jpg')
+    """
+   
     """
     D.	Repeat part 2.C for inertia (note this is an attribute in the kmeans estimator called _inertia). Do the optimal k’s agree?
     """
@@ -99,7 +110,21 @@ def compute():
         inertia_values.append([k, inertia])
     # dct value has the same structure as in 2C
     dct = answers["2D: inertia plot"] =inertia_values
+    """
+    inertia_values = answers["2D: inertia plot"]
+    k_values, inertia_scores = zip(*inertia_values)
+    fig=plt.figure(figsize=(20,10))
+    plt.plot(k_values, inertia_scores, 'o-', linewidth=2, markersize=10)
+    plt.title('inertia vs. Number of Clusters')
+    plt.xlabel('Number of clusters (k)')
+    plt.ylabel('inertia ')
+    plt.xticks(range(1, 9))  # Ensure x-ticks for each k value
+    plt.grid(False)
+    plt.savefig('part2)ques_d.jpg')
+   
     #print(dct)
+    """
+    
     # dct value should be a string, e.g., "yes" or "no"
     dct = answers["2D: do ks agree?"] = "no"
 

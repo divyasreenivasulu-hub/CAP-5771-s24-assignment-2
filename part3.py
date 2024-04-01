@@ -61,14 +61,16 @@ def compute():
     B.	Create a linkage matrix Z, and plot a dendrogram using the scipy.hierarchy.linkage and scipy.hierachy.dendrogram functions, with “single” linkage.
     """
     Z = linkage(toy_data['X'], method='single')
-    #fig=plt.figure(figsize=(20,10))
-    # Answer: NDArray
+    ##fig=plt.figure(figsize=(20,10))
+    
     answers["3B: linkage"] = Z
+    #print(Z)
+    
     #print(answers["3B: linkage"])
 
     # Answer: the return value of the dendogram function, dicitonary
     dendro_dict = dendrogram(Z)
-    ##plt.savefig('part3)ques_A.png')
+    ##plt.savefig('part3)ques_A.jpg')
     answers["3B: dendogram"] = dendro_dict
     #print(answers["3B: dendogram"])
 
@@ -101,7 +103,7 @@ def compute():
 
 
     # Answer type: string. Insert your explanation as a string.
-    answers["3F: rich get richer"] = "yes"
+    answers["3F: rich get richer"] = "yes,near the origin we could see the merging"
 
     return answers
 
