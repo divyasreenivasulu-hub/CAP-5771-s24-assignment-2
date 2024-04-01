@@ -163,6 +163,9 @@ def compute():
     
     Create a pdf of the plots and return in your report. 
     """
+        # dct is the function described above in 4.C
+    dct = answers["4A: modified function"] = fit_modified
+
     linkage_methods = ['single', 'complete', 'ward', 'average']  # using 'average' instead of 'centroid'
     modified_results = {}
 
@@ -178,17 +181,9 @@ def compute():
     for dataset_name in modified_results:
         X, y = answers["4A: datasets"][dataset_name]
         plot_dct[dataset_name] = ((X, y), modified_results[dataset_name])
-
-# Now, plot_dct is structured correctly to be used with plot_part1C for all linkage methods
-# Call plot_part1C once for all datasets and linkage methods
-#plot_file_name = '/mnt/data/modified_clustering_results.jpg'  # Update to your desired path
     myplt.plot_part1C(plot_dct, "part4_c.jpg")
 
     
-
-    # dct is the function described above in 4.C
-    dct = answers["4A: modified function"] = fit_modified
-    results=dct
 
     return answers
 
