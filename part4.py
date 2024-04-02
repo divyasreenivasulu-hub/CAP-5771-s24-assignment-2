@@ -166,7 +166,7 @@ def compute():
     dct = answers["4A: modified function"] = fit_modified
     results= dct
     #print (results)
-    #return answers
+    return answers
 
 
 # ----------------------------------------------------------------------
