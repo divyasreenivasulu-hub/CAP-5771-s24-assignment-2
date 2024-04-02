@@ -142,8 +142,8 @@ def compute():
     
     Create a pdf of the plots and return in your report. 
     """
-        # dct is the function described above in 4.C
-    dct = answers["4A: modified function"] = fit_modified
+
+    
 
     linkage_methods = ['single', 'complete', 'ward', 'average']  # using 'average' instead of 'centroid'
     modified_results = {}
@@ -161,7 +161,9 @@ def compute():
         X, y = answers["4A: datasets"][dataset_name]
         plot_dct[dataset_name] = ((X, y), modified_results[dataset_name])
     myplt.plot_part1C(plot_dct, "part4_c.jpg")
-
+            # dct is the function described above in 4.C
+    
+    dct = answers["4A: modified function"] = fit_modified
     
 
     return answers
