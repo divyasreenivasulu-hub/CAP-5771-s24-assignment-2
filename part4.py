@@ -41,8 +41,7 @@ def fit_hierarchical_cluster(data, linkage_type, n_clusters):
     return model.labels_
     
 
-def fit_modified(data,linkage_method):
-    
+def fit_modified(data, linkage_method, elbow_threshold=0.05):
     # Standardize the data
     scaler = StandardScaler()
     data_scaled = scaler.fit_transform(data)
@@ -50,11 +49,19 @@ def fit_modified(data,linkage_method):
     # Compute the linkage matrix
     Z = linkage(data_scaled, method=linkage_method)
 
-    # Determine the cutoff for clustering by finding the largest gap in linkage distance
+    # Calculate the distances between each merge
     distances = Z[:, 2]
-    distance_diff = np.diff(distances)
-    max_gap_index = np.argmax(distance_diff)
-    cutoff_distance = distances[max_gap_index] + distance_diff[max_gap_index] / 2
+    # Calculate the rate of distance increase between successive merges
+    distance_diffs = np.diff(distances)
+    # Normalize by the max distance to avoid scale issues
+    normalized_distance_diffs = distance_diffs / distances.max()
+
+    # Find the "elbow" in the distances, which may be a good cutoff for clustering
+    elbow_index = np.where(normalized_distance_diffs > elbow_threshold)[0]
+    if len(elbow_index) > 0:
+        cutoff_distance = distances[elbow_index[0]]
+    else:
+        cutoff_distance = distances[-1]  # No elbow found, use the last merge distance
 
     # Perform clustering with the determined cutoff distance
     model = AgglomerativeClustering(
@@ -63,6 +70,7 @@ def fit_modified(data,linkage_method):
         linkage=linkage_method
     )
     model.fit(data_scaled)
+    
     return model.labels_
 
 
