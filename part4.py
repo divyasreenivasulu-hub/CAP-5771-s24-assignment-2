@@ -84,10 +84,6 @@ def fit_modified(data, linkage_method, elbow_threshold=0.05):
     model.fit(data_scaled)
     return model.labels_
 
-
-
-
-
 def compute():
     answers = {}
 
@@ -144,18 +140,11 @@ def compute():
     # Create a nested dictionary for each dataset that contains labels for each linkage method
         kmeans_dct[dataset_name] = ((X, y), hierarchical_results[dataset_name])
 
-# Now, kmeans_dct is structured correctly to be used with plot_part1C for all linkage methods
-# Call plot_part1C once for all datasets and linkage methods
-    #plot_file_name = '/mnt/data/part4_b_composite.jpg'  # Name of the file to save the plot
+
     myplt.plot_part1C(kmeans_dct, 'part4_b.jpg')
 
-
-
-
+# dct value: list of dataset abbreviations (see 1.C)
     
-
-      
-    # dct value: list of dataset abbreviations (see 1.C)
     dct = answers["4B: cluster successes"] = ["nc","nm"]
 
     """
