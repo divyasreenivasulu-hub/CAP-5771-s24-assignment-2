@@ -9,8 +9,7 @@ from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import StandardScaler
 from itertools import cycle, islice
 import scipy.io as io
-from matplotlib.backends.backend_pdf import PdfPages
-from scipy.cluster.hierarchy import dendrogram, linkage,fcluster  #
+from scipy.cluster.hierarchy import dendrogram, linkage  #
 
 # import plotly.figure_factory as ff
 import math
@@ -40,10 +39,10 @@ def fit_hierarchical_cluster(data, linkage_type, n_clusters):
 
     # Return the label predictions
     return model.labels_
+    
 
-
-
-def fit_modified(data, linkage_method):
+def fit_modified(data,linkage_method):
+    
     # Standardize the data
     scaler = StandardScaler()
     data_scaled = scaler.fit_transform(data)
@@ -65,6 +64,7 @@ def fit_modified(data, linkage_method):
     )
     model.fit(data_scaled)
     return model.labels_
+
 
 def compute():
     answers = {}
@@ -96,6 +96,8 @@ def compute():
                                      'add': [add[0],add[1]],
                                      'b': [b[0],b[1]]}
 
+
+
     # dct value:  the `fit_hierarchical_cluster` function
     dct = answers["4A: fit_hierarchical_cluster"] = fit_hierarchical_cluster
 
@@ -103,7 +105,6 @@ def compute():
     B.	Apply your function from 4.A and make a plot similar to 1.C with the four linkage types (single, complete, ward, centroid: rows in the figure), and use 2 clusters for all runs. Compare the results to problem 1, specifically, are there any datasets that are now correctly clustered that k-means could not handle?
 
     Create a pdf of the plots and return in your report. 
-    
     """
     linkage_methods = ['single', 'complete', 'ward', 'average']  # using 'average' instead of 'centroid'
     hierarchical_results = {}
@@ -125,8 +126,8 @@ def compute():
 
     myplt.plot_part1C(kmeans_dct, 'part4_b.jpg')
 
-# dct value: list of dataset abbreviations (see 1.C)
-    
+
+    # dct value: list of dataset abbreviations (see 1.C)
     dct = answers["4B: cluster successes"] = ["nc","nm"]
 
     """
@@ -150,11 +151,10 @@ def compute():
         X, y = answers["4A: datasets"][dataset_name]
         plot_dct[dataset_name] = ((X, y), modified_results[dataset_name])
     myplt.plot_part1C(plot_dct, "part4_c.jpg")
-            # dct is the function described above in 4.C
-    
-    dct = answers["4A: modified function"] = fit_modified
-    #results= dct
-    #print (results)
+
+    # dct is the function described above in 4.C
+    dct = answers["4C: modified function"] = fit_modified
+
     return answers
 
 
@@ -164,3 +164,4 @@ if __name__ == "__main__":
 
     with open("part4.pkl", "wb") as f:
         pickle.dump(answers, f)
+
