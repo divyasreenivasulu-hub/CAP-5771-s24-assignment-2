@@ -164,11 +164,9 @@ def compute():
             # dct is the function described above in 4.C
     
     dct = answers["4A: modified function"] = fit_modified
-    #results= dct
+    results= dct
     #print (results)
-    
-
-    return answers
+    #return answers
 
 
 # ----------------------------------------------------------------------

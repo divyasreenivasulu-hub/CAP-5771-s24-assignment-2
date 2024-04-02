@@ -73,7 +73,7 @@ def compute():
     """
     # dct value: the `fit_kmeans` function
     dct = answers["2B: fit_kmeans"] = fit_kmeans
-    #print(dct)
+    print(dct)
     """
     C.	Plot the SSE as a function of k for k=1,2,….,8, and choose the optimal k based on the elbow method.
     """
@@ -87,6 +87,7 @@ def compute():
     # dct value: a list of tuples, e.g., [[0, 100.], [1, 200.]]
     # Each tuple is a (k, SSE) pair
     dct = answers["2C: SSE plot"] = sse_values
+    print(sse_values)
     """
     sse_values = answers["2C: SSE plot"]
     k_values, sse_scores = zip(*sse_values)
