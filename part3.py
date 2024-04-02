@@ -77,7 +77,8 @@ def compute():
     """
     C.	Consider the merger of the cluster corresponding to points with index sets {I={8,2,13}} J={1,9}}. At what iteration (starting from 0) were these clusters merged? That is, what row does the merger of A correspond to in the linkage matrix Z? The rows count from 0. 
     """
-    
+
+
 
     answers["3C: iteration"] = 4
     #print(i)
