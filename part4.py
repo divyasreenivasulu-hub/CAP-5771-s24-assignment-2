@@ -42,16 +42,6 @@ def fit_hierarchical_cluster(data, linkage_type, n_clusters):
     return model.labels_
 
 
-import numpy as np
-from scipy.cluster.hierarchy import linkage, dendrogram
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import AgglomerativeClustering
-
-from scipy.cluster.hierarchy import linkage
-from sklearn.preprocessing import StandardScaler
-import numpy as np
-
-
 
 def fit_modified(data, linkage_method, elbow_threshold=0.05):
     # Standardize the data
