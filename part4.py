@@ -64,7 +64,7 @@ def fit_modified(data, linkage_method):
         linkage=linkage_method
     )
     model.fit(data_scaled)
- return model.labels_
+    return model.labels_
 
 def compute():
     answers = {}
